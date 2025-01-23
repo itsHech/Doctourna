@@ -1,0 +1,400 @@
+<div class="container-fluid p-0 pb-4 con">
+
+    <div class="main">
+      <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <!-- first Step -->
+        <mat-step [stepControl]="statusForm">
+          <form class="pb-3" [formGroup]="statusForm">
+            <h4 translate>What_is_your_professional_status</h4>
+            <div class="wrapper">
+              
+              <input
+                type="radio"
+                value="titulaire"
+                formControlName="select"
+                id="titulaire"
+              />
+              <label for="titulaire" class="option">
+                <span translate>Permanent_Employee</span>
+                <div class="dot"></div>
+              </label>
+              <input
+                type="radio"
+                value="professionnel"
+                formControlName="select"
+                id="professionnel"
+              />
+              <label for="professionnel" class="option">
+                <span translate>Liberal_Profession</span>
+                <div class="dot"></div>
+              </label>
+              <input
+                type="radio"
+                value="contractuel"
+                formControlName="select"
+                id="contractuel"
+              />
+              <label for="contractuel" class="option">
+                <span translate>Contractual_Employee</span>
+                <div class="dot"></div>
+              </label>
+            </div>
+            <!-- <ul>
+              <li>
+                <input type="checkbox" />
+                <span>Salarié contractuel</span>
+              </li>
+              <li>
+                <input type="checkbox" />
+                <span>Salarié titulaire</span>
+              </li>
+              <li>
+                <input type="checkbox" />
+                <span>Professionel</span>
+              </li>
+            </ul> -->
+            <div class="buttonsContainer">
+              <button type="button" translate class="nextBtn btnHover" (click)="firstform()">Next</button>
+
+            </div>
+          </form>
+        </mat-step>
+        <!-- Second Step -->
+        <mat-step [stepControl]="natureCreditForm">
+          <form class="pb-3" [formGroup]="natureCreditForm">
+            <!-- <ng-template matStepLabel matStepperIcon="edit"> </ng-template> -->
+            <h4 translate>What_type_of_loan_is_required</h4>
+            <div class="wrapper">
+              <input
+                type="radio"
+                value="consommation"
+                formControlName="nature"
+                id="option-1"
+              />
+              <label for="option-1" class="option">
+                <span translate>Consumer_Credit</span>
+                <div class="dot"></div>
+              </label>
+              <input
+                type="radio"
+                value="auto"
+                formControlName="nature"
+                (onchange)="changeApport()"
+                id="option-2"
+              />
+              <label for="option-2" class="option">
+                <span translate>car_Loan</span>
+                <div class="dot"></div>
+              </label>
+              <input
+                type="radio"
+                value="immobilier"
+                formControlName="nature"
+                (onchange)="changeApport()"
+                id="option-3"
+              />
+              <label for="option-3" class="option">
+                <span translate>Mortgage_Loan</span>
+                <div class="dot"></div>
+              </label>
+              <!-- <input type="radio" name="select" id="option-4" />
+              <label for="option-4" class="option">
+                <span>Crédit Professionel</span>
+                <div class="dot"></div>
+              </label> -->
+              <!-- <input type="radio" name="select" id="option-5" />
+              <label for="option-5" class="option">
+                <span>Rachat de credit</span>
+                <div class="dot"></div>
+              </label> -->
+            </div>
+            <div class="buttonsContainer">
+              <button translate class="prevBtn" matStepperPrevious>Previous</button>
+              <button
+              translate
+                class="nextBtn btnHover"
+                matStepperNext
+                (click)="natureCreditCheck()"
+              >
+              Next
+              </button>
+            </div>
+          </form>
+        </mat-step>
+        <!-- Third Step -->
+        <mat-step [stepControl]="revenuForm">
+          <form class="pb-3" [formGroup]="revenuForm">
+            <h4 translate>Income</h4>
+            <!-- <ng-template matStepLabel matStepperIcon="edit"> </ng-template> -->
+            <div class="form-group">
+              <label for="" translate>Gross_Annual_Salary</label>
+              <div class="dt">
+                <input
+                  formControlName="salaire"
+                  min="0"
+                  type="number"
+                  [ngClass]="{ 'is-invalid': submitted1 && f1['salaire']?.errors && f1['salaire']?.value < 1 }"
+                placeholder="0"
+                class="form-control"
+                />
+
+
+                <span>DT</span>
+              </div>
+            </div>
+           
+            <div *ngIf="submitted1 && f1['salaire']?.errors && f1['salaire']?.value < 1" class="invalid-feedback">
+                <div translate>Salaire annuel brut est obligatoire et doit être supérieur à 0.000 dt</div>
+              </div>
+              
+
+              
+            <div class="form-group">
+              <label translate for="">Dividends </label>
+  
+              <div class="dt">
+                <input
+                  formControlName="dividendes"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                  class="form-control"
+                />
+                <span>DT</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label translate for="">Others</label>
+  
+              <div class="dt">
+                <input
+                  formControlName="autre"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                  class="form-control"
+                />
+                <span>DT</span>
+              </div>
+            </div>
+  
+            <div class="buttonsContainer">
+              <button translate class="prevBtn" matStepperPrevious>Previous</button>
+              <button translate class="nextBtn btnHover" (click)="revenueCheck()">Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <!-- Fourth Step -->
+        <mat-step [stepControl]="montantForm">
+          <form class="pb-3" [formGroup]="montantForm">
+            <!-- <ng-template matStepLabel matStepperIcon="edit"> </ng-template> -->
+            <div class="form-group">
+              <label translate for="">Requested_Amount</label>
+              <div class="dt">
+                <input
+                   type="number"
+                   min="0"
+                   formControlName="montant"
+                   class="form-control"
+                   placeholder="0"
+                   [ngClass]="{ 'is-invalid': submitted2 && f2['montant']?.errors }"
+                   required
+                  (input)="inpmontant($event)"
+                 />
+
+                <span>DT</span>
+              </div>
+              <div *ngIf="submitted2 && f2['montant']?.errors" class="invalid-feedback">
+                <div translate>Montant est obligatoire</div>
+              </div>
+              
+            </div>
+            <div class="form-group">
+                <label translate for="">Internal_Personal_Contribution</label>
+                <h6 class="appersonel">{{ apportPersonnel }} DT</h6>
+              
+                <div class="range-wrap" *ngIf="isImmobiler">
+                  <input
+                    #immobilerRange
+                    type="range"
+                    class="range mt-3"
+                    value="20"
+                    [min]="minapport"
+                    max="100"
+                    (input)="setBubble(immobilerRange, immobilerBubble)" 
+                  />
+                  <output #immobilerBubble class="bubble">{{ immobilerRange.value }}</output>
+                </div>
+              
+                <div class="range-wrap" *ngIf="isauto">
+                  <input
+                    #autoRange
+                    type="range"
+                    class="range mt-3"
+                    value="40"
+                    [min]="minapport"
+                    max="100"
+                    (input)="setBubble(autoRange, autoBubble)"  
+                  />
+                  <output #autoBubble class="bubble">{{ autoRange.value }}</output>
+                </div>
+              
+                <div class="range-wrap" *ngIf="isConsommation">
+                  <input
+                    #consommationRange
+                    type="range"
+                    class="range mt-3"
+                    value="0"
+                    [min]="minapport"
+                    max="100"
+                    (input)="setBubble(consommationRange, consommationBubble)" 
+                  />
+                  <output #consommationBubble class="bubble">{{ consommationRange.value }}</output>
+                </div>
+              </div>
+               
+              <div class="form-group">
+                <label translate for="">Duration</label>
+                <div class="range-wrap">
+                  <input
+                    #range2
+                    type="range"
+                    class="range mt-2"
+                    value="1"
+                    min="1"
+                    [max]="maxAnnee"
+                    (input)="setDuree(range2, bubble2)"
+                  />
+                  <output #bubble2 class="bubble"></output>
+                </div>
+              </div>
+              
+              
+
+            <div class="buttonsContainer">
+              <button translate class="prevBtn" matStepperPrevious>Previous</button>
+              <button translate class="nextBtn btnHover" (click)="checkMontant()" matStepperNext>
+                Next
+              </button>
+            </div>
+          </form>
+        </mat-step>
+  
+        <!-- Fifth Step -->
+        <mat-step [stepControl]="banqueForm">
+          <form class="pb-3" [formGroup]="banqueForm">
+            <!-- <ng-template matStepLabel matStepperIcon="edit"> </ng-template> -->
+            <h4 translate>Relationship_with_the_bank</h4>
+            <div class="form-group">
+              <label translate for="">What_is_your_bank</label>
+  
+              <select formControlName="nomBanque" class="form-control">
+                <option value=""></option>
+                <option *ngFor="let item of banquesList" [value]="item._id">
+                  {{ item.bankName }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label translate >Do_you_have_a_Current_loan</label>
+              <div class="wrap">
+                <input
+                  #creditoui
+                  formControlName="creditEncours"
+                  type="radio"
+                  value="true"
+                  id="oui"
+                />
+                <label for="oui" class="option">
+                  <span translate>Yes</span>
+                  <div class="dot"></div>
+                </label>
+                <input
+                  id="non"
+                  type="radio"
+                  formControlName="creditEncours"
+                  value="false"
+                />
+                <label for="non" class="option">
+                  <span translate>no</span>
+                  <div class="dot"></div>
+                </label>
+              </div>
+            </div>
+            <!-- <div
+              *ngIf="banqueForm.value.creditEncours == 'true'"
+              class="form-group"
+            >
+              <label for="">Quelle est votre mensualité</label>
+  
+              <input
+                type="number"
+                formControlName="mensualiteCredit"
+                class="form-control"
+                required
+              />
+            </div> -->
+            <div class="form-group">
+              <label translate>Do_you_have_any_unpaid_checks</label>
+              <div class="wrap">
+                <input
+                  #credit
+                  id="chequeoui"
+                  type="radio"
+                  formControlName="checkImpayé"
+                  value="true"
+                />
+                <label for="chequeoui" class="option">
+                  <span translate>Yes</span>
+                  <div class="dot"></div>
+                </label>
+                <input
+                  id="chequenon"
+                  type="radio"
+                  formControlName="checkImpayé"
+                  value="false"
+                />
+                <label for="chequenon" class="option">
+                  <span translate>no</span>
+                  <div class="dot"></div>
+                </label>
+              </div>
+            </div>
+            <div class="buttonsContainer">
+              <button translate class="prevBtn" matStepperPrevious>Previous</button>
+              <button translate class="nextBtn btnHover" (click)="banqueCheck()">Next</button>
+            </div>
+          </form>
+        </mat-step>
+  
+        <!-- six Step -->
+        <mat-step [stepControl]="banqueForm">
+          <form class="pb-3" [formGroup]="banqueForm">
+            <div class="felicitaion">
+              <div class="circle">
+                <span class="fel">Congratulations - تهانينا<br></span>
+                <span class="mens">Monthly payment - القسط الشهري <br ><span class="prix">{{ mensualite }} DT</span></span>
+              </div>
+          
+              <div class="avis mt-4">
+                يُسرنا إعلامكم بوجود إمكانية للحصول على قرض, خبراؤنا جاهزون لتقديم المساعدة في طلبكم - Congratulations, your eligibility assessment is favorable. Our experts are available to assist you with your credit application.
+              </div>
+              <div translate class="mt-3 mb-2">
+                البريد الإلكتروني - Email : contact&#64;easybank.tn<br>
+                الهاتف - Phone : +21642550600
+              </div>
+            </div>
+  
+            <div class="buttonsContainer">
+              <button translate class="prevBtn" matStepperPrevious>Previous</button>
+              <button class="nextBtn btnHover"  (click)="first()" >إعادة - Reset</button>
+              <!--            <button class="nextBtn btnHover" (click)="banqueCheck()">Suivant</button>-->
+            </div>
+          </form>
+        </mat-step>
+  
+        
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+  
