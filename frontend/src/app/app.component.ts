@@ -18,6 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -29,7 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   standalone: true,
   imports: [CommonModule,RouterModule,RouterOutlet,MainComponent,ReviewsComponent,PartenariatComponent,AboutComponent,ServicesComponent,QaComponent,TeamComponent,ContactComponent, CalculatorComponent,MatStepperModule,
     ReactiveFormsModule,
-    MatInputModule,
+    MatInputModule,LoginComponent,RegisterComponent,
     MatButtonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
